@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="destopk.css" media="screen and (min-width:600px)">
+    <title>mi primera api </title>
+</head>
+<body>
+    <main>
+    <h1>Mascotas Aleatorias</h1>
+    <span id="error"></span>
+    <button>new pets</button>
+    <figure>
+        <img class="perro"  alt="imagen de  un gato"> 
+        <button id="save_dog" >save pets</button> 
+
+        <img  class="gato" alt="imagen de  un gato">
+        <button id="save_cat" >save pets</button>
+    </figure>
+
+    <section>
+        <h2>Subir mascotas</h2>
+        <h3>Sube la forto de tu perro</h3>
+        <form id="upload1">
+            <input type="file" name="file" >
+            <button type="button" onclick="upfile1()">subir perro a favoritos </button>
+        </form>
+    
+        <h3>Sube la foto de tu gato</h3>
+        <form id="upload2">
+            <input type="file" name="file" >
+            <button type="button" onclick="upfile2()">subir gato a favoritos </button>
+        </form>
+    </section>
+
+    <section id="favoritesd">
+        <h2>dog favorites</h2>
+    </section>
+    <section id="favoritesc">
+        <h2 class="favoritesc-title">cat favorites</h2>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="await.js"></script>
+</main>
+</body>
+</html>
