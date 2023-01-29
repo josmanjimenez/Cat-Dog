@@ -1,5 +1,5 @@
-const URL = 'https://api.thedogapi.com/v1/images/search';
-const URL1 =' https://api.thecatapi.com/v1/images/search';
+const URL = 'https://api.thedogapi.com/v1/images/search?limit=10';
+const URL1 =' https://api.thecatapi.com/v1/images/search?limit=10';
 //headers autorization/
 const URL1f =' https://api.thecatapi.com/v1/favourites';
 
@@ -16,18 +16,48 @@ const axn = axios.create ({
     axn.defaults.headers.common['X-API-KEY'] = '9e10fd34-8a0a-40c8-95de-b3ae3a732464';
 
 
-
+const caruoselImg1=document.querySelector('#img-caruosel1');
+const caruoselImg2=document.querySelector('#img-caruosel2');
+const caruoselImg3=document.querySelector('#img-caruosel3');
+const caruoselImg4=document.querySelector('#img-caruosel4');
  const boton = document.querySelector('button'); 
  const btnDog= document.getElementById('save_dog');
  const btnCat = document.getElementById('save_cat');
  boton.addEventListener('click', newImages);
-const img = document.querySelector('.perro');
+const dogsCtn = document.querySelector('.container-dogs');
+const catsCtn = document.querySelector('.container-cats');
 const img1 = document.querySelector('.gato');
 const err = document.getElementById('error');
 const sec = document.getElementById('favoritesd');
 const sec1 = document.getElementById('favoritesc');
 const catTitle = document.querySelector('favoritesc-title')
 
+
+
+async function banner(){
+    const res = await fetch(URL);
+        const data = await res.json();
+        if(res.status!==200){
+            err.innerHTML='hubo un error'+ res.status;
+         }
+        else{
+        caruoselImg1.src=data[1].url;
+        caruoselImg3.src=data[2].url;
+    }
+    
+    const res1 = await fetch(URL1);
+    const data1 = await res1.json();
+    if (res1.status!==200){
+     err.innerHTML='hubo un error'+ res.status;
+    }
+    else {
+    
+        caruoselImg2.src=data1[1].url;
+        caruoselImg4.src=data1[2].url;
+     
+        
+    }
+}
 
 async function fetch1 (){
    
@@ -38,10 +68,14 @@ async function fetch1 (){
 
         }
         else{
-        img.src=data[0].url;
-       
-        btnDog.onclick= ()=> saveDog(data[0].id);
-        
+        console.log(data);
+        let view=`${data.map(dog=>` <div class="card border border-dark p-2">
+        <img class="perro border-bottom border-dark " src=${dog.url}  alt="imagen de  un perro" >
+        <button class="mt-2 btn btn-secondary save_dog" >agregar a favoritos </button>
+        </div>`).join("")}`;
+
+        dogsCtn.innerHTML=view;
+        btnDog.onclick= ()=> saveDog(data[0].id); 
         }
   
 
@@ -54,9 +88,14 @@ async function fetch2 (){
      err.innerHTML='hubo un error'+ res.status;
     }
     else {
-        img1.src=data[0].url;
-        
-        btnCat.onclick= ()=> saveCat(data[0].id);
+        console.log('cat',data)
+        let view=`${data.map(cat=>` <div class="card border border-dark p-2">
+        <img class="gato border-bottom border-dark " src=${cat.url}  alt="imagen de  un perro" >
+        <button class="mt-2 btn btn-secondary save_cat" >agregar a favoritos </button>
+        </div>`).join("")}`;
+
+        catsCtn.innerHTML=view;
+        btnDog.onclick= ()=> saveDog(data[0].id);
         
     }
 
@@ -71,19 +110,23 @@ async function favoritesDog(){
         err.innerHTML=`hubo un error ${res.status} ${data.message}`;
     }
     else {
-       console.log(data);
+       console.log('faviritos',data);
         data.forEach(item => {
            
-            const article = document.createElement('article');
-             const img = document.createElement('img');
+            const div = document.createElement('div');
+            div.classList.add("card","border","border-dark","p-2")
+             const img = document.createElement('img'); 
+             img.classList.add('gato', 'border-bottom', 'border-dark');
+             img.setAttribute('alt','imagen perro');
              const btn = document.createElement('button');
+             btn.classList.add("mt-2", "btn","btn-secondary")
              const btnText = document.createTextNode('Sacar el dog de favoritos');
              img.src=item.image.url;
              btn.onclick=()=> deleteDog(item.id);
              btn.appendChild(btnText);
-             article.appendChild(img);
-             article.appendChild(btn);
-             sec.appendChild(article); 
+             div.appendChild(img);
+             div.appendChild(btn);
+             sec.appendChild(div); 
          });
     }
 
@@ -99,21 +142,24 @@ async function favoritesCat (){
     }
     else {
         console.log(data);
-        catTitle.innerHTML='';
-        catTitle.innerHTML='favorites cat';
+      
 
         data.forEach(item => {
            
-           const article = document.createElement('article');
-            const img = document.createElement('img');
-            const btn = document.createElement('button');
-            const btnText = document.createTextNode('Sacar el cat de favoritos');
-            img.src=item.image.url;
-            btn.onclick=()=> deleteCat(item.id);
-            btn.appendChild(btnText);
-            article.appendChild(img);
-            article.appendChild(btn);
-            sec1.appendChild(article); 
+            const div = document.createElement('div');
+            div.classList.add("card","border","border-dark","p-2")
+             const img = document.createElement('img'); 
+             img.classList.add('gato', 'border-bottom', 'border-dark');
+             img.setAttribute('alt','imagen perro');
+             const btn = document.createElement('button');
+             btn.classList.add("mt-2", "btn","btn-secondary")
+             const btnText = document.createTextNode('Sacar el gato de favoritos');
+             img.src=item.image.url;
+             btn.onclick=()=> deleteDog(item.id);
+             btn.appendChild(btnText);
+             div.appendChild(img);
+             div.appendChild(btn);
+             sec1.appendChild(div); 
         });
         
     }
@@ -266,6 +312,8 @@ function newImages (){
 
 
 
+
+banner();
 fetch1();
 fetch2();
 favoritesDog ();

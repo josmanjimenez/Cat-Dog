@@ -1,12 +1,6 @@
-@media (min-width:900px) {
+@media (min-width:900px){
+    .container-dogs,  .container-cats, #favoritesd,#favoritesc{
+        grid-template-columns: repeat(4,1fr);
 
-    figure{
-        flex-direction: row;
-        justify-content: center;
-    }
- 
-    img{
-        min-width: 300px;
-        min-width: 300px;
     }
 }
