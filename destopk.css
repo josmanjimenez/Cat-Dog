@@ -15,7 +15,6 @@
     }
     
 .container-dogs img , .container-cats img, #favoritesd img,#favoritesc img{
-max-width: 300px;
 max-height: 250px;
 }
 
