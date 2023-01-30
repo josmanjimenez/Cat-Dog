@@ -1,0 +1,13 @@
+@media (min-width:700px) {
+    
+    .container-dogs ,  .container-cats, #favoritesd,#favoritesc{
+        
+        grid-template-columns: repeat(3,1fr);
+    }
+    .container-dogs>img{
+       
+        width: 100%;
+    }
+  
+    
+}
