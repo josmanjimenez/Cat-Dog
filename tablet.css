@@ -1,0 +1,8 @@
+@media (min-width:500px) {
+    .container-dogs , .container-cats, #favoritesd,#favoritesc{
+        grid-template-columns: repeat(2,auto);
+        grid-template-rows: repeat(4,max-content) ;   
+    }
+ 
+    
+}

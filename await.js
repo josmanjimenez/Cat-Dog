@@ -20,44 +20,13 @@ const caruoselImg1=document.querySelector('#img-caruosel1');
 const caruoselImg2=document.querySelector('#img-caruosel2');
 const caruoselImg3=document.querySelector('#img-caruosel3');
 const caruoselImg4=document.querySelector('#img-caruosel4');
- const boton = document.querySelector('button'); 
- const btnDog= document.getElementById('save_dog');
- const btnCat = document.getElementById('save_cat');
- boton.addEventListener('click', newImages);
 const dogsCtn = document.querySelector('.container-dogs');
 const catsCtn = document.querySelector('.container-cats');
-const img1 = document.querySelector('.gato');
 const err = document.getElementById('error');
 const sec = document.getElementById('favoritesd');
 const sec1 = document.getElementById('favoritesc');
-const catTitle = document.querySelector('favoritesc-title')
 
 
-
-async function banner(){
-    const res = await fetch(URL);
-        const data = await res.json();
-        if(res.status!==200){
-            err.innerHTML='hubo un error'+ res.status;
-         }
-        else{
-        caruoselImg1.src=data[1].url;
-        caruoselImg3.src=data[2].url;
-    }
-    
-    const res1 = await fetch(URL1);
-    const data1 = await res1.json();
-    if (res1.status!==200){
-     err.innerHTML='hubo un error'+ res.status;
-    }
-    else {
-    
-        caruoselImg2.src=data1[1].url;
-        caruoselImg4.src=data1[2].url;
-     
-        
-    }
-}
 
 async function fetch1 (){
    
@@ -71,11 +40,11 @@ async function fetch1 (){
         console.log(data);
         let view=`${data.map(dog=>` <div class="card border border-dark p-2">
         <img class="perro border-bottom border-dark " src=${dog.url}  alt="imagen de  un perro" >
-        <button class="mt-2 btn btn-secondary save_dog" >agregar a favoritos </button>
+        <button class="mt-2 bt2 save_dog"  onclick="saveDog('${dog.id}')" >agregar a favoritos </button>
         </div>`).join("")}`;
 
         dogsCtn.innerHTML=view;
-        btnDog.onclick= ()=> saveDog(data[0].id); 
+       
         }
   
 
@@ -91,11 +60,11 @@ async function fetch2 (){
         console.log('cat',data)
         let view=`${data.map(cat=>` <div class="card border border-dark p-2">
         <img class="gato border-bottom border-dark " src=${cat.url}  alt="imagen de  un perro" >
-        <button class="mt-2 btn btn-secondary save_cat" >agregar a favoritos </button>
+        <button class="mt-2 bt2 save_cat" onclick="saveCat('${cat.id}')" >agregar a favoritos </button>
         </div>`).join("")}`;
 
         catsCtn.innerHTML=view;
-        btnDog.onclick= ()=> saveDog(data[0].id);
+      
         
     }
 
@@ -119,7 +88,7 @@ async function favoritesDog(){
              img.classList.add('gato', 'border-bottom', 'border-dark');
              img.setAttribute('alt','imagen perro');
              const btn = document.createElement('button');
-             btn.classList.add("mt-2", "btn","btn-secondary")
+             btn.classList.add("mt-2", "bt2")
              const btnText = document.createTextNode('Sacar el dog de favoritos');
              img.src=item.image.url;
              btn.onclick=()=> deleteDog(item.id);
@@ -152,10 +121,10 @@ async function favoritesCat (){
              img.classList.add('gato', 'border-bottom', 'border-dark');
              img.setAttribute('alt','imagen perro');
              const btn = document.createElement('button');
-             btn.classList.add("mt-2", "btn","btn-secondary")
+             btn.classList.add("mt-2", "bt2")
              const btnText = document.createTextNode('Sacar el gato de favoritos');
              img.src=item.image.url;
-             btn.onclick=()=> deleteDog(item.id);
+             btn.onclick=()=> deleteCat(item.id);
              btn.appendChild(btnText);
              div.appendChild(img);
              div.appendChild(btn);
@@ -185,10 +154,6 @@ async function saveDog (id){
     else {
       console.log (data);
       sec.innerHTML='';
-      const h2 = document.createElement('h2');
-      const text = document.createTextNode("favorites dog");
-      h2.appendChild(text);
-      sec.appendChild(h2);
       favoritesDog();
     }
 }
@@ -231,10 +196,6 @@ async function deleteDog (id){
     else {
       console.log (data+ 'dog borrado');
       sec.innerHTML='';
-      const h2 = document.createElement('h2');
-      const text = document.createTextNode("favorites dog");
-      h2.appendChild(text);
-      sec.appendChild(h2);
       favoritesDog();
     }
 }
@@ -300,20 +261,15 @@ async function deleteCat (id){
 
 
     }
-    }
-
-
+}
 function newImages (){
     fetch1();
     fetch2();
-    
 }
 
 
+    
 
-
-
-banner();
 fetch1();
 fetch2();
 favoritesDog ();

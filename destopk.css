@@ -1,6 +1,26 @@
 @media (min-width:900px){
     .container-dogs,  .container-cats, #favoritesd,#favoritesc{
         grid-template-columns: repeat(4,1fr);
+        ;
 
     }
+    .nav-img{
+        object-fit: cover;
+        object-position: center;
+        height:100vh;
+    }
+
+    .banner{
+        height: 100vh;
+    }
+    
+.container-dogs img , .container-cats img, #favoritesd img,#favoritesc img{
+max-width: 300px;
+max-height: 250px;
+}
+
+ul{
+    opacity: 1;
+}
+    
 }
